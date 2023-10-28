@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Generation with Dallee</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        img {
+            max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <img id="generatedImage" src="" alt="Generated image will appear here">
+    <script>
+        window.onload = function() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'https://api.dallee.com/generate', true);
+            xhr.setRequestHeader('Content-Type', 'application/json');
+            xhr.setRequestHeader('Authorization', 'Bearer your-api-key');
+            xhr.responseType = 'blob';
+
+            xhr.onload = function(e) {
+                if (this.status == 200) {
+                    var img = document.getElementById('generatedImage');
+                    var urlCreator = window.URL || window.webkitURL;
+                    img.src = urlCreator.createObjectURL(this.response);
+                }
+            };
+
+            var data = {
+                // Your data here
+            };
+
+            xhr.send(JSON.stringify(data));
+        };
+    </script>
+</body>
+</html>

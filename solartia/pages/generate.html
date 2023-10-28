@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Add some basic styling */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #generateButton {
+            margin: 20px;
+        }
+
+        #generatedImage {
+            width: 200px;
+            height: 200px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <button id="generateButton">Generate Image</button>
+    <div id="generatedImage"></div>
+
+    <script>
+        document.getElementById('generateButton').addEventListener('click', function() {
+            fetch('https://api.dallee.ai/v1/images', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer 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'
+                },
+                body: JSON.stringify({
+                    prompt: 'Woman drinking coke with halloween costumes'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                var img = document.createElement('img');
+                img.src = data.url;
+                document.getElementById('generatedImage').appendChild(img);
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>
